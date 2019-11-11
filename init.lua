@@ -32,3 +32,12 @@ minetest.register_node("pipeworks_elbow:pipeworks_elbow", {
 	after_dig_node = pipeworks.after_dig,
 	on_rotate = pipeworks.on_rotate,
 })
+
+minetest.register_craft( {
+	output = "pipeworks_elbow:pipeworks_elbow 1",
+	recipe = {
+		{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" },
+		{ "pipeworks:tube_1", "pipeworks:tube_1", "default:steel_ingot" },
+		{ "default:steel_ingot", "pipeworks:tube_1", "default:steel_ingot" }
+	},
+})
