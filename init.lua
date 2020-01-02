@@ -1,5 +1,3 @@
-
-
 minetest.register_node("pipeworks_elbow:pipeworks_elbow", {
 	description = "Airtight steelblock elbow tube",
 	tiles = {
@@ -14,18 +12,26 @@ minetest.register_node("pipeworks_elbow:pipeworks_elbow", {
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_stone_defaults(),
 	tube = {
-		connect_sides = {front = 1, back = 1,},
+		connect_sides = {front = 1, right = 1,},
 		priority = 50,
-		can_go = function(_, node)
-      local dir = minetest.facedir_to_dir(node.param2)
-      if dir == 0 then
-        return { {x=0,y=0,z=0} }
-        -- TODO: all directions
-      end
+		can_go = function(_, node, velocity)
+			-- looking directions
+			local dir = vector.multiply(minetest.facedir_to_dir(node.param2), -1)
+			local right_dir = pipeworks.facedir_to_right_dir(node.param2)
+
+			if vector.equals(vector.multiply(right_dir, -1), velocity) then
+				return { dir }
+			else
+				return { right_dir }
+			end
     end,
 		can_insert = function(_, node, _, direction)
-			local dir = minetest.facedir_to_dir(node.param2)
-			return vector.equals(dir, direction) or vector.equals(vector.multiply(dir, -1), direction)
+			-- looking directions
+			local dir = vector.multiply(minetest.facedir_to_dir(node.param2), -1)
+			local right_dir = pipeworks.facedir_to_right_dir(node.param2)
+
+			return vector.equals(vector.multiply(dir, -1), direction) or
+				vector.equals(vector.multiply(right_dir, -1), direction)
 		end,
 	},
 	after_place_node = pipeworks.after_place,
