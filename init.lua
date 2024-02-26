@@ -9,6 +9,7 @@ minetest.register_node("pipeworks_elbow:pipeworks_elbow", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	groups = {cracky=1, oddly_breakable_by_hand = 1, tubedevice = 1},
+	is_ground_content = false,
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_stone_defaults(),
 	tube = {
